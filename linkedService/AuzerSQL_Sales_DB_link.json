@@ -1,0 +1,17 @@
+{
+	"name": "AuzerSQL_Sales_DB_link",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "pankaj.database.windows.net",
+			"database": "Sales",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "pankaj",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDQ1OTk3RDM5LUVGN0ItNDU4MS04OTI5LTJDN0MxQkEwOTkyQl9iOTg0YzUwNC1iMmNjLTQ1OTctOWRiNC1kOTIyYzFkOGNjOGMiDQp9"
+		}
+	}
+}

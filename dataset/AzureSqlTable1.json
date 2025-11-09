@@ -1,0 +1,58 @@
+{
+	"name": "AzureSqlTable1",
+	"properties": {
+		"description": "Product Table From Sales",
+		"linkedServiceName": {
+			"referenceName": "AuzerSQL_Sales_DB_link",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "level_0",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "index",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "product_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "product_name",
+				"type": "varchar"
+			},
+			{
+				"name": "brand_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "category_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "model_year",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "list_price",
+				"type": "float",
+				"precision": 15
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "products"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,24 @@
+{
+	"name": "Every_Day",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Sales_Product_Transfer_to_storage",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2025-11-07T20:14:00",
+				"timeZone": "Eastern Standard Time"
+			}
+		}
+	}
+}

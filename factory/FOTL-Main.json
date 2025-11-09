@@ -1,0 +1,9 @@
+{
+	"name": "FOTL-Main",
+	"location": "westus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "21927b8b-8222-4fc0-ac1f-513ae79fb9a1",
+		"tenantId": "0edf0ac2-4bf0-4a8e-90b2-b3f527902fb9"
+	}
+}
