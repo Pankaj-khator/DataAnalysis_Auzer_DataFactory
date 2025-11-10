@@ -1,0 +1,36 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"description": "",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          level_0 as long,",
+				"          index as long,",
+				"          product_id as long,",
+				"          product_name as string,",
+				"          brand_id as long,",
+				"          category_id as long,",
+				"          model_year as long,",
+				"          list_price as double",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1"
+			]
+		}
+	}
+}
