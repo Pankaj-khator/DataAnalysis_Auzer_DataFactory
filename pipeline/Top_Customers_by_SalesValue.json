@@ -1,0 +1,30 @@
+{
+	"name": "Top_Customers_by_SalesValue",
+	"properties": {
+		"description": "Customers by Total Sales Value",
+		"activities": [
+			{
+				"name": "Top_Customers_by_SalesValue",
+				"description": "Top_Customers_by_SalesValue",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/ppankaj21@ncstudents.niagaracollege.ca/DataAnalysis_Auzer_DataFactory/Databricks/Connecting_Auzer_and_Databricks"
+				},
+				"linkedServiceName": {
+					"referenceName": "Azure_Databricks1",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
