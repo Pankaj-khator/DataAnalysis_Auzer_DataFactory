@@ -9,6 +9,12 @@
 					"referenceName": "Sales_Product_Transfer_to_storage",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Top_Customers_by_SalesValue",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
@@ -16,7 +22,7 @@
 			"recurrence": {
 				"frequency": "Day",
 				"interval": 1,
-				"startTime": "2025-11-07T20:14:00",
+				"startTime": "2025-11-10T20:14:00",
 				"timeZone": "Eastern Standard Time"
 			}
 		}
