@@ -1,0 +1,112 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "FOTL-Main"
+		},
+		"AuzerSQL_Sales_DB_link_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AuzerSQL_Sales_DB_link'"
+		},
+		"AzureSql_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSql'"
+		},
+		"Azure_Data_Lake_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Azure_Data_Lake'"
+		},
+		"Azure_Databricks1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'Azure_Databricks1'"
+		},
+		"AuzerSQL_Sales_DB_link_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "pankaj.database.windows.net"
+		},
+		"AuzerSQL_Sales_DB_link_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "Sales"
+		},
+		"AuzerSQL_Sales_DB_link_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "pankaj"
+		},
+		"AzureSql_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "pankaj.database.windows.net"
+		},
+		"AzureSql_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "Sales"
+		},
+		"AzureSql_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "pankaj"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "FOTL-Main_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AuzerSQL_Sales_DB_link_password": {
+						"value": "[parameters('AuzerSQL_Sales_DB_link_password')]"
+					},
+					"AzureSql_password": {
+						"value": "[parameters('AzureSql_password')]"
+					},
+					"Azure_Data_Lake_connectionString": {
+						"value": "[parameters('Azure_Data_Lake_connectionString')]"
+					},
+					"Azure_Databricks1_accessToken": {
+						"value": "[parameters('Azure_Databricks1_accessToken')]"
+					},
+					"AuzerSQL_Sales_DB_link_properties_typeProperties_server": {
+						"value": "[parameters('AuzerSQL_Sales_DB_link_properties_typeProperties_server')]"
+					},
+					"AuzerSQL_Sales_DB_link_properties_typeProperties_database": {
+						"value": "[parameters('AuzerSQL_Sales_DB_link_properties_typeProperties_database')]"
+					},
+					"AuzerSQL_Sales_DB_link_properties_typeProperties_userName": {
+						"value": "[parameters('AuzerSQL_Sales_DB_link_properties_typeProperties_userName')]"
+					},
+					"AzureSql_properties_typeProperties_server": {
+						"value": "[parameters('AzureSql_properties_typeProperties_server')]"
+					},
+					"AzureSql_properties_typeProperties_database": {
+						"value": "[parameters('AzureSql_properties_typeProperties_database')]"
+					},
+					"AzureSql_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSql_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
