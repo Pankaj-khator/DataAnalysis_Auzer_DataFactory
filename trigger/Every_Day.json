@@ -9,12 +9,6 @@
 					"referenceName": "Sales_Product_Transfer_to_storage",
 					"type": "PipelineReference"
 				}
-			},
-			{
-				"pipelineReference": {
-					"referenceName": "Top_Customers_by_SalesValue",
-					"type": "PipelineReference"
-				}
 			}
 		],
 		"type": "ScheduleTrigger",
