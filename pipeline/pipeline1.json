@@ -27,6 +27,13 @@
 						}
 					},
 					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "tkn_blobstorage",
+							"type": "LinkedServiceReference"
+						},
+						"path": ""
+					},
 					"translator": {
 						"type": "TabularTranslator",
 						"mappings": [
