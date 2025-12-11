@@ -29,7 +29,7 @@
 					"enableStaging": true,
 					"stagingSettings": {
 						"linkedServiceName": {
-							"referenceName": "tkn_blobstorage",
+							"referenceName": "linkedService2",
 							"type": "LinkedServiceReference"
 						},
 						"path": ""
