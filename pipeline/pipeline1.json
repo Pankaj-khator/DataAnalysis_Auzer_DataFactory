@@ -1,0 +1,92 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SnowflakeV2Sink",
+						"importSettings": {
+							"type": "SnowflakeImportCopyCommand"
+						}
+					},
+					"enableStaging": true,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "customer_id",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "CUSTOMER_ID",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "first_name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FIRST_NAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "last_name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LAST_NAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TotalSales",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "TOTALSALES",
+									"type": "Double"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SnowflakeTable1",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
