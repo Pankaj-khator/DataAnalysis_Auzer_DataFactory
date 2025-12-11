@@ -13,10 +13,20 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "dbo.TotalSales_per_customer"
+					},
+					{
+						"name": "Destination",
+						"value": "TBL.TOTALSALES_PER_CUSTOMER"
+					}
+				],
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": "",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -32,7 +42,7 @@
 							"referenceName": "linkedService2",
 							"type": "LinkedServiceReference"
 						},
-						"path": ""
+						"path": "blobstorage"
 					},
 					"translator": {
 						"type": "TabularTranslator",
