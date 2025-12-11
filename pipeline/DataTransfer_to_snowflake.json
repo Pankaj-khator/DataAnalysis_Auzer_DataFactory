@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "DataTransfer_to_snowflake",
 	"properties": {
 		"activities": [
 			{
