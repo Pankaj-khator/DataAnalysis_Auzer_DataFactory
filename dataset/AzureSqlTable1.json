@@ -51,7 +51,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "products"
+			"table": "TotalSales_per_customer"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
