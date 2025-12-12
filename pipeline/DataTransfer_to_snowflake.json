@@ -39,7 +39,7 @@
 					"enableStaging": true,
 					"stagingSettings": {
 						"linkedServiceName": {
-							"referenceName": "linkedService2",
+							"referenceName": "linkedService1",
 							"type": "LinkedServiceReference"
 						},
 						"path": "blobstorage"
