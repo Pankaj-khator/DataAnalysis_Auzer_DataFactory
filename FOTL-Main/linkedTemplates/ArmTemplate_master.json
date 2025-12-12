@@ -19,9 +19,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Azure_Data_Lake'"
 		},
-		"Azure_Databricks1_accessToken": {
+		"Snowflake_data_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'Azure_Databricks1'"
+			"metadata": "Secure string for 'password' of 'Snowflake_data'"
 		},
 		"AuzerSQL_Sales_DB_link_properties_typeProperties_server": {
 			"type": "string",
@@ -46,6 +46,22 @@
 		"AzureSql_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "pankaj"
+		},
+		"Snowflake_data_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "INVENTORYMANAGEMENT"
+		},
+		"Snowflake_data_properties_typeProperties_role": {
+			"type": "string",
+			"defaultValue": "ACCOUNTADMIN"
+		},
+		"linkedService1_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'linkedService1'"
+		},
+		"tkn_blobstorage_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'tkn_blobstorage'"
 		},
 		"containerUri": {
 			"type": "string",
@@ -83,8 +99,8 @@
 					"Azure_Data_Lake_connectionString": {
 						"value": "[parameters('Azure_Data_Lake_connectionString')]"
 					},
-					"Azure_Databricks1_accessToken": {
-						"value": "[parameters('Azure_Databricks1_accessToken')]"
+					"Snowflake_data_password": {
+						"value": "[parameters('Snowflake_data_password')]"
 					},
 					"AuzerSQL_Sales_DB_link_properties_typeProperties_server": {
 						"value": "[parameters('AuzerSQL_Sales_DB_link_properties_typeProperties_server')]"
@@ -103,6 +119,18 @@
 					},
 					"AzureSql_properties_typeProperties_userName": {
 						"value": "[parameters('AzureSql_properties_typeProperties_userName')]"
+					},
+					"Snowflake_data_properties_typeProperties_database": {
+						"value": "[parameters('Snowflake_data_properties_typeProperties_database')]"
+					},
+					"Snowflake_data_properties_typeProperties_role": {
+						"value": "[parameters('Snowflake_data_properties_typeProperties_role')]"
+					},
+					"linkedService1_sasUri": {
+						"value": "[parameters('linkedService1_sasUri')]"
+					},
+					"tkn_blobstorage_sasUri": {
+						"value": "[parameters('tkn_blobstorage_sasUri')]"
 					}
 				}
 			},

@@ -14,7 +14,7 @@
 		"Azure_Data_Lake_connectionString": {
 			"value": ""
 		},
-		"Azure_Databricks1_accessToken": {
+		"Snowflake_data_password": {
 			"value": ""
 		},
 		"AuzerSQL_Sales_DB_link_properties_typeProperties_server": {
@@ -34,6 +34,18 @@
 		},
 		"AzureSql_properties_typeProperties_userName": {
 			"value": "pankaj"
+		},
+		"Snowflake_data_properties_typeProperties_database": {
+			"value": "INVENTORYMANAGEMENT"
+		},
+		"Snowflake_data_properties_typeProperties_role": {
+			"value": "ACCOUNTADMIN"
+		},
+		"linkedService1_sasUri": {
+			"value": ""
+		},
+		"tkn_blobstorage_sasUri": {
+			"value": ""
 		}
 	}
 }

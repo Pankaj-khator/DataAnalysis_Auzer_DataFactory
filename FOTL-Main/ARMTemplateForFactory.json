@@ -19,9 +19,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Azure_Data_Lake'"
 		},
-		"Azure_Databricks1_accessToken": {
+		"Snowflake_data_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'Azure_Databricks1'"
+			"metadata": "Secure string for 'password' of 'Snowflake_data'"
 		},
 		"AuzerSQL_Sales_DB_link_properties_typeProperties_server": {
 			"type": "string",
@@ -46,6 +46,22 @@
 		"AzureSql_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "pankaj"
+		},
+		"Snowflake_data_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "INVENTORYMANAGEMENT"
+		},
+		"Snowflake_data_properties_typeProperties_role": {
+			"type": "string",
+			"defaultValue": "ACCOUNTADMIN"
+		},
+		"linkedService1_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'linkedService1'"
+		},
+		"tkn_blobstorage_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'tkn_blobstorage'"
 		}
 	},
 	"variables": {
@@ -53,25 +69,32 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/Sales_Product_Transfer_to_storage')]",
+			"name": "[concat(parameters('factoryName'), '/DataTransfer_to_snowflake')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "Storing Product Table in Data storage ",
 				"activities": [
 					{
-						"name": "SalesProductTransfer",
-						"description": "Storing Product Table in Data storage ",
+						"name": "Copy data1",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
-							"timeout": "1.00:00:00",
+							"timeout": "0.12:00:00",
 							"retry": 0,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
 						},
-						"userProperties": [],
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "dbo.TotalSales_per_customer"
+							},
+							{
+								"name": "Destination",
+								"value": "TBL.TOTALSALES_PER_CUSTOMER"
+							}
+						],
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
@@ -79,18 +102,64 @@
 								"partitionOption": "None"
 							},
 							"sink": {
-								"type": "AzureTableSink",
-								"azureTableInsertType": "replace",
-								"writeBatchSize": 10000
+								"type": "SnowflakeV2Sink",
+								"preCopyScript": "TRUNCATE TABLE tbl.TotalSales_per_customer;\n",
+								"importSettings": {
+									"type": "SnowflakeImportCopyCommand"
+								}
 							},
-							"enableStaging": false,
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "linkedService1",
+									"type": "LinkedServiceReference"
+								},
+								"path": "blobstorage"
+							},
 							"translator": {
 								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
+								"mappings": [
+									{
+										"source": {
+											"name": "customer_id",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "CUSTOMER_ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "first_name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FIRST_NAME",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "last_name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LAST_NAME",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "TotalSales",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "TOTALSALES",
+											"type": "Double"
+										}
+									}
+								]
 							}
 						},
 						"inputs": [
@@ -102,7 +171,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "AzureTable1",
+								"referenceName": "SnowflakeTable1",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -112,50 +181,12 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": [],
-				"lastPublishTime": "2025-11-08T05:01:49Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]",
-				"[concat(variables('factoryId'), '/datasets/AzureTable1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Top_Customers_by_SalesValue')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Customers by Total Sales Value",
-				"activities": [
-					{
-						"name": "Top_Customers_by_SalesValue",
-						"description": "Top_Customers_by_SalesValue",
-						"type": "DatabricksNotebook",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "1.00:00:00",
-							"retry": 2,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"notebookPath": "/Users/ppankaj21@ncstudents.niagaracollege.ca/DataAnalysis_Auzer_DataFactory/Databricks/Connecting_Auzer_and_Databricks"
-						},
-						"linkedServiceName": {
-							"referenceName": "Azure_Databricks1",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Azure_Databricks1')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]",
+				"[concat(variables('factoryId'), '/datasets/SnowflakeTable1')]",
+				"[concat(variables('factoryId'), '/linkedServices/linkedService1')]"
 			]
 		},
 		{
@@ -213,7 +244,7 @@
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "products"
+					"table": "TotalSales_per_customer"
 				}
 			},
 			"dependsOn": [
@@ -238,6 +269,52 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/Azure_Data_Lake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SnowflakeTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Snowflake_data",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SnowflakeV2Table",
+				"schema": [
+					{
+						"name": "CUSTOMER_ID",
+						"type": "NUMBER",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "FIRST_NAME",
+						"type": "VARCHAR",
+						"precision": 0,
+						"scale": 0
+					},
+					{
+						"name": "LAST_NAME",
+						"type": "VARCHAR",
+						"precision": 0,
+						"scale": 0
+					},
+					{
+						"name": "TOTALSALES",
+						"type": "FLOAT",
+						"precision": 0,
+						"scale": 0
+					}
+				],
+				"typeProperties": {
+					"schema": "TBL",
+					"table": "TOTALSALES_PER_CUSTOMER"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Snowflake_data')]"
 			]
 		},
 		{
@@ -299,65 +376,54 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Azure_Databricks1')]",
+			"name": "[concat(parameters('factoryName'), '/Snowflake_data')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "First Data Brick connection",
 				"annotations": [],
-				"type": "AzureDatabricks",
+				"type": "SnowflakeV2",
 				"typeProperties": {
-					"domain": "https://adb-2065609314171077.17.azuredatabricks.net",
-					"accessToken": {
+					"authenticationType": "Basic",
+					"accountIdentifier": "sqbwdol-kd80279",
+					"user": "PANKAJKHATOR",
+					"database": "[parameters('Snowflake_data_properties_typeProperties_database')]",
+					"warehouse": "COMPUTE_WH",
+					"role": "[parameters('Snowflake_data_properties_typeProperties_role')]",
+					"password": {
 						"type": "SecureString",
-						"value": "[parameters('Azure_Databricks1_accessToken')]"
+						"value": "[parameters('Snowflake_data_password')]"
 					},
-					"newClusterNodeType": "Standard_DS4_v2",
-					"newClusterNumOfWorker": "1:2",
-					"newClusterVersion": "10.4.x-scala2.12",
-					"clusterOption": "Autoscaling",
-					"newClusterInitScripts": []
+					"useUtcTimestamps": false
+				},
+				"version": "1.1"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/linkedService1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"sasUri": "[parameters('linkedService1_sasUri')]"
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Every_Day')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
+			"name": "[concat(parameters('factoryName'), '/tkn_blobstorage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Sales_Product_Transfer_to_storage",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "Top_Customers_by_SalesValue",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
+				"type": "AzureBlobStorage",
 				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2025-11-10T20:14:00",
-						"timeZone": "Eastern Standard Time"
-					}
+					"sasUri": "[parameters('tkn_blobstorage_sasUri')]"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Sales_Product_Transfer_to_storage')]",
-				"[concat(variables('factoryId'), '/pipelines/Top_Customers_by_SalesValue')]"
-			]
+			"dependsOn": []
 		}
 	]
 }
