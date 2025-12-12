@@ -1,9 +1,0 @@
-{
-	"name": "Sales_Product_Transfer_to_storage",
-	"properties": {
-		"description": "Storing Product Table in Data storage ",
-		"annotations": [],
-		"lastPublishTime": "2025-11-08T05:01:49Z"
-	},
-	"type": "Microsoft.DataFactory/factories/pipelines"
-}
