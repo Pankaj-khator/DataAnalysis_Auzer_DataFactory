@@ -1,0 +1,24 @@
+{
+	"name": "Every_Day",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "DataTransfer_to_snowflake",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2025-12-12T00:11:00",
+				"timeZone": "Eastern Standard Time"
+			}
+		}
+	}
+}
